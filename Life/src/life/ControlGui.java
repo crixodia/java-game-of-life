@@ -5,17 +5,25 @@
  */
 package life;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author gabri
  */
 public class ControlGui extends javax.swing.JFrame {
+
+    //Grid of boxes
     LifeGui GameWindow = new LifeGui();
+
     /**
      * Creates new form ControlGui
      */
     public ControlGui() {
-        
+
         initComponents();
     }
 
@@ -28,6 +36,7 @@ public class ControlGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fileDialog = new javax.swing.JFileChooser();
         btnSave = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
         btnPlayPause = new javax.swing.JToggleButton();
@@ -40,6 +49,13 @@ public class ControlGui extends javax.swing.JFrame {
         lblGeneration = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
+        fileDialog.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        fileDialog.setApproveButtonText("");
+        fileDialog.setApproveButtonToolTipText("");
+        fileDialog.setDialogTitle("Choose a folder");
+        fileDialog.setFileFilter(null);
+        fileDialog.setDragEnabled(true);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game of Life");
         setResizable(false);
@@ -50,6 +66,11 @@ public class ControlGui extends javax.swing.JFrame {
         });
 
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnOpen.setText("Open");
 
@@ -165,6 +186,47 @@ public class ControlGui extends javax.swing.JFrame {
         //aboutWindow.setVisible(true);
     }//GEN-LAST:event_btnAboutActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        //Our own file type
+        FileNameExtensionFilter ff;
+        ff = new FileNameExtensionFilter("Java game of life file .jglf", "jglf");
+
+        fileDialog.addChoosableFileFilter(ff);
+        fileDialog.setFileFilter(ff);
+        fileDialog.setSelectedFile(new File("new.jglf"));   //Suggested filename
+
+        //Shows dialog
+        int fd = fileDialog.showDialog(this, "Save");
+        if (fd == JFileChooser.APPROVE_OPTION) {
+            File path = fileDialog.getSelectedFile();
+            if (path.exists()) {    //If file exists ask for a confirmation
+                int reply = JOptionPane.showConfirmDialog(
+                        this,
+                        "This file already exists.\n"
+                        + "Do you want to overwrite this file?",
+                        "LifeGUI",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
+                if (reply == JOptionPane.YES_OPTION) {
+                    if (path.delete()) {
+                        LifeFile.saveFile(path.toString(), GameWindow.matrix);
+                    } else {
+                        JOptionPane.showConfirmDialog(
+                                this,
+                                "An error has occurred.",
+                                "LifeGUI",
+                                JOptionPane.ERROR,
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                }
+            } else {
+                LifeFile.saveFile(path.toString(), GameWindow.matrix);
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -193,10 +255,8 @@ public class ControlGui extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ControlGui().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ControlGui().setVisible(true);
         });
     }
 
@@ -207,11 +267,12 @@ public class ControlGui extends javax.swing.JFrame {
     private javax.swing.JButton btnOpen;
     private javax.swing.JToggleButton btnPlayPause;
     private javax.swing.JButton btnSave;
+    private javax.swing.JFileChooser fileDialog;
     private javax.swing.JLabel generation;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblGeneration;
     private javax.swing.JLabel lblPopulation;
     private javax.swing.JLabel population;
     // End of variables declaration//GEN-END:variables
-    
+
 }

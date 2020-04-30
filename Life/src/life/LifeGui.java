@@ -19,8 +19,8 @@ import javax.swing.*;
 public class LifeGui extends JFrame {
 
     private HashMap componentMap;
-    private static final int ROWS = 50;
-    private static final int COLS = 50;
+    public static final int ROWS = 50;
+    public static final int COLS = 50;
     public boolean[][] matrix;
     private final JPanel container;
 

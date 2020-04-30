@@ -1,18 +1,32 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2020 gabri
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package life;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author gabri
+ * @author Cristian Bastidas
  */
 public class ControlGui extends javax.swing.JFrame {
 
@@ -25,6 +39,14 @@ public class ControlGui extends javax.swing.JFrame {
     public ControlGui() {
 
         initComponents();
+
+        //Our own file type
+        FileNameExtensionFilter ff;
+        ff = new FileNameExtensionFilter("Java game of life file .jglf", "jglf");
+
+        fileDialog.addChoosableFileFilter(ff);
+        fileDialog.setFileFilter(ff);
+        fileDialog.setSelectedFile(new File("new.jglf"));   //Suggested filename
     }
 
     /**
@@ -73,6 +95,11 @@ public class ControlGui extends javax.swing.JFrame {
         });
 
         btnOpen.setText("Open");
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenActionPerformed(evt);
+            }
+        });
 
         btnPlayPause.setText("Play");
 
@@ -100,6 +127,11 @@ public class ControlGui extends javax.swing.JFrame {
         });
 
         btnGithub.setText("GitHub");
+        btnGithub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGithubActionPerformed(evt);
+            }
+        });
 
         lblPopulation.setText("0");
 
@@ -173,7 +205,6 @@ public class ControlGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
         GameWindow.setVisible(true);
     }//GEN-LAST:event_formWindowOpened
 
@@ -182,19 +213,11 @@ public class ControlGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        //About aboutWindow = new About();
-        //aboutWindow.setVisible(true);
+        About aboutWindow = new About();
+        aboutWindow.setVisible(true);
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        //Our own file type
-        FileNameExtensionFilter ff;
-        ff = new FileNameExtensionFilter("Java game of life file .jglf", "jglf");
-
-        fileDialog.addChoosableFileFilter(ff);
-        fileDialog.setFileFilter(ff);
-        fileDialog.setSelectedFile(new File("new.jglf"));   //Suggested filename
-
         //Shows dialog
         int fd = fileDialog.showDialog(this, "Save");
         if (fd == JFileChooser.APPROVE_OPTION) {
@@ -210,7 +233,7 @@ public class ControlGui extends javax.swing.JFrame {
                 );
                 if (reply == JOptionPane.YES_OPTION) {
                     if (path.delete()) {
-                        LifeFile.saveFile(path.toString(), GameWindow.matrix);
+                        LifeFile.saveFile(path.toString(), GameWindow.matrix, this);
                     } else {
                         JOptionPane.showConfirmDialog(
                                 this,
@@ -222,10 +245,28 @@ public class ControlGui extends javax.swing.JFrame {
                     }
                 }
             } else {
-                LifeFile.saveFile(path.toString(), GameWindow.matrix);
+                LifeFile.saveFile(path.toString(), GameWindow.matrix, this);
             }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+        //Shows dialog
+        int fd = fileDialog.showDialog(this, "Open");
+        if (fd == JFileChooser.APPROVE_OPTION) {
+            File path = fileDialog.getSelectedFile();
+            GameWindow.clear();
+            GameWindow.setMatrix(LifeFile.loadFile(path.toString(), this));
+        }
+    }//GEN-LAST:event_btnOpenActionPerformed
+
+    private void btnGithubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGithubActionPerformed
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://github.com/crixodia/java-game-of-life"));
+        } catch (IOException ex) {
+            Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGithubActionPerformed
 
     /**
      * @param args the command line arguments

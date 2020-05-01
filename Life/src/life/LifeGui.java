@@ -49,12 +49,16 @@ public class LifeGui extends JFrame {
      * Values to select grid's boxes
      */
     public boolean[][] matrix;
+    public int population;
+    public int generation;
+
     private final JPanel container;
 
     /**
      * Grid's GUI
      */
     public LifeGui() {
+        this.generation = 0;
         this.matrix = new boolean[ROWS][COLS];
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -130,6 +134,7 @@ public class LifeGui extends JFrame {
 
     /**
      * Search for a component. You must give its name
+     *
      * @param name Component's name
      * @return A swing component
      */
@@ -154,20 +159,104 @@ public class LifeGui extends JFrame {
                 }
             }
         }
+        this.generation = 0;
     }
 
     //Updates boolean values from the matrix
     private void reload() {
+        this.population = 0;
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 JToggleButton bxButton = (JToggleButton) getComponentByName(i + "," + j);
                 if (bxButton != null) {
                     bxButton.setSelected(this.matrix[i][j]);
+                    if (this.matrix[i][j]) {
+                        this.population++;
+                    }
                 }
             }
         }
     }
 
+    //Allows infinity grid
+    private int rcCheck(int i, int rc) {
+        int r = i;
+        if (i < 0) {
+            r = 49;
+        } else if (i >= rc) {
+            r = 0;
+        }
+        return r;
+    }
+
+    /**
+     * Changes the grid's state TODO:This method will be used for step by step
+     * feature
+     */
+    public void changeState() {
+        this.generation++;
+        boolean[][] newMatrix = new boolean[ROWS][COLS];
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                int trueCounter = 0;
+                for (int k = 0; k < 8; k++) {
+                    int i_ = 0, j_ = 0;
+                    switch (k) {
+                        case 0:
+                            i_ = rcCheck(i - 1, ROWS);
+                            j_ = rcCheck(j - 1, COLS);
+                            break;
+                        case 1:
+                            i_ = rcCheck(i - 1, ROWS);
+                            j_ = j;
+                            break;
+                        case 2:
+                            i_ = rcCheck(i - 1, ROWS);
+                            j_ = rcCheck(j + 1, COLS);
+                            break;
+                        case 3:
+                            i_ = i;
+                            j_ = rcCheck(j - 1, COLS);
+                            break;
+                        case 4:
+                            i_ = i;
+                            j_ = rcCheck(j + 1, COLS);
+                            break;
+                        case 5:
+                            i_ = rcCheck(i + 1, ROWS);
+                            j_ = rcCheck(j - 1, COLS);
+                            break;
+                        case 6:
+                            i_ = rcCheck(i + 1, ROWS);
+                            j_ = j;
+                            break;
+                        case 7:
+                            i_ = rcCheck(i + 1, ROWS);
+                            j_ = rcCheck(j + 1, COLS);
+                            break;
+                    }
+                    if (this.matrix[i_][j_]) {
+                        trueCounter++;
+                    }
+                }
+                if (this.matrix[i][j] && (trueCounter == 2 || trueCounter == 3)) {
+                    newMatrix[i][j] = true;
+                    //System.out.println("A cell has resurrected");
+                } else if (!this.matrix[i][j] && trueCounter == 3) {
+                    newMatrix[i][j] = true;
+                    //System.out.println("A cell has died");
+                }
+            }
+        }
+        //System.out.println("Matrix has changed");
+        this.setMatrix(newMatrix);
+    }
+
+    /**
+     * Setting boolean values and reloading the grid
+     *
+     * @param matrix a matrix duh!
+     */
     public void setMatrix(boolean[][] matrix) {
         this.matrix = matrix;
         reload();
@@ -175,6 +264,10 @@ public class LifeGui extends JFrame {
 
     public boolean[][] getMatrix() {
         return matrix;
+    }
+
+    public int getPopulation() {
+        return population;
     }
 
     private class BoxBtn implements ActionListener {

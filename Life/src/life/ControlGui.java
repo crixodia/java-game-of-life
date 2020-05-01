@@ -18,6 +18,11 @@ package life;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -33,10 +38,21 @@ public class ControlGui extends javax.swing.JFrame {
     //Grid of boxes
     LifeGui GameWindow = new LifeGui();
 
+    private final ScheduledExecutorService scheduler;
+    final Runnable run;
+    ScheduledFuture<?> runHandle;
+
     /**
      * Creates new form ControlGui
      */
     public ControlGui() {
+        this.scheduler = Executors.newScheduledThreadPool(1);
+        this.run = () -> {
+            GameWindow.changeState();
+            lblPopulation.setText(Integer.toString(GameWindow.population));
+            lblGeneration.setText(Integer.toString(GameWindow.generation));
+        };
+        //this.runHandle = scheduler.scheduleAtFixedRate(run, 1, 3, SECONDS);
 
         initComponents();
 
@@ -102,6 +118,11 @@ public class ControlGui extends javax.swing.JFrame {
         });
 
         btnPlayPause.setText("Play");
+        btnPlayPause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlayPauseActionPerformed(evt);
+            }
+        });
 
         generation.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         generation.setLabelFor(lblGeneration);
@@ -262,11 +283,32 @@ public class ControlGui extends javax.swing.JFrame {
 
     private void btnGithubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGithubActionPerformed
         try {
-            java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://github.com/crixodia/java-game-of-life"));
+            java.awt.Desktop.getDesktop().browse(
+                    java.net.URI.create("https://github.com/crixodia/java-game-of-life")
+            );
         } catch (IOException ex) {
             Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGithubActionPerformed
+
+
+    private void btnPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayPauseActionPerformed
+        if (btnPlayPause.isSelected()) {
+            //System.out.println("Game has started");
+            this.runHandle = scheduler.scheduleAtFixedRate(
+                    run,
+                    0,
+                    500,
+                    MILLISECONDS
+            );
+            //GameWindow.changeState(); //Used for testing
+            btnPlayPause.setText("Stop");
+        } else {
+            //System.out.println("Game has stopped");
+            runHandle.cancel(true);
+            btnPlayPause.setText("Play");
+        }
+    }//GEN-LAST:event_btnPlayPauseActionPerformed
 
     /**
      * @param args the command line arguments

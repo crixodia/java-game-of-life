@@ -6,7 +6,7 @@ El juego de la vida es un autómata celular diseñado por el matemático britán
     * [Controles](#controles)
         * [Guardando y cargando patrones](#guardando-y-cargando-patrones)
     * [Rejilla](#rejilla)
-* [Ejemplo](#ejemplo)
+* [Ejemplos](#ejemplos)
 ## Reglas
 El "tablero de juego" es una malla plana formada por cuadrados (las "células") que se extiende por el infinito en todas las direcciones. Por tanto, cada célula tiene 8 células "vecinas", que son las que están próximas a ella, incluidas las diagonales. Las células tienen dos estados: están "vivas" o "muertas" (o "encendidas" y "apagadas"). El estado de las células evoluciona a lo largo de unidades de tiempo discretas (se podría decir que por turnos). El estado de todas las células se tiene en cuenta para calcular el estado de las mismas al turno siguiente. Todas las células se actualizan simultáneamente en cada turno, siguiendo estas reglas:
 

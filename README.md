@@ -1,3 +1,5 @@
+<div style="text-align:justify;">
+
 # Java Game Of Life
 El juego de la vida es un autómata celular diseñado por el matemático británico John Horton Conway en 1970. Se trata de un juego de cero jugadores, lo que quiere decir que su evolución está determinada por el estado inicial y no necesita ninguna entrada de datos posterior.
 ## Contenido
@@ -17,11 +19,17 @@ Extraído de [Wikipedia](https://es.wikipedia.org/wiki/Juego_de_la_vida)
 ## GUI
 Ejecutando el juego notaremos dos ventanas, una con los controles y otra con la rejilla correspondiente al cambio de estados.
 
-![GUI](/images/gen-pop2.png)
+<img src="./images/gen-pop2.png" alt="Controles" style="display: block; margin-left: auto;
+margin-right: auto;max-width:900px;
+  width: 100%;">
+
 ### Controles
 La ventana de controles permitirá arrancar el cómputo de estados del juego con el botón Play (podrás parar el juego con Stop). Además observaremos la población de cada estado y la generación.
 
-![Controles](/images/contro-gui.png)
+<img src="./images/contro-gui.png" alt="Controles" style="display: block; margin-left: auto;
+margin-right: auto;max-width:350px;
+  width: 100%;">
+
 #### Guardando y cargando patrones
 Una parte importante de la GUI es que podremos guardar y cargar patrones. Para guardar patrones simplemente dibujaremos uno previamente en la rejilla haciendo clic en los lugares deseados. Y luego, en la ventana de controles el botón "Save" creará un archivo formato **jglf**. Esto con el fin de evitar errores al cargar un archivo.
 
@@ -40,3 +48,5 @@ Puedes descargar algunos patrones como [ejemplos](https://github.com/crixodia/ja
 ![Grid Gif](/images/grid-gif.gif)
 
 🧐 Para sugerencias o preguntas puedes contactar a [@crixodia](https://www.twitter.com/crixodia)
+
+</div>

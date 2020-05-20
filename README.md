@@ -26,9 +26,9 @@ margin-right: auto;max-width:900px;
 ### Controles
 La ventana de controles permitirá arrancar el cómputo de estados del juego con el botón Play (podrás parar el juego con Stop). Además observaremos la población de cada estado y la generación.
 
-<img src="./images/contro-gui.png" alt="Controles" style="display: block; margin-left: auto;
+[<img src="./images/contro-gui.png" alt="Controles" style="display: block; margin-left: auto;
 margin-right: auto;max-width:350px;
-  width: 100%;">
+  width: 100%;">](/images/contro-gui.png)
 
 #### Guardando y cargando patrones
 Una parte importante de la GUI es que podremos guardar y cargar patrones. Para guardar patrones simplemente dibujaremos uno previamente en la rejilla haciendo clic en los lugares deseados. Y luego, en la ventana de controles el botón "Save" creará un archivo formato **jglf**. Esto con el fin de evitar errores al cargar un archivo.

@@ -10,7 +10,7 @@ El juego de la vida es un autómata celular diseñado por el matemático britán
     * [Rejilla](#rejilla)
 * [Ejemplos](#ejemplos)
 ## Reglas
-El "tablero de juego" es una malla plana formada por cuadrados (las "células") que se extiende por el infinito en todas las direcciones. Por tanto, cada célula tiene 8 células "vecinas", que son las que están próximas a ella, incluidas las diagonales. Las células tienen dos estados: están "vivas" o "muertas" (o "encendidas" y "apagadas"). El estado de las células evoluciona a lo largo de unidades de tiempo discretas (se podría decir que por turnos). El estado de todas las células se tiene en cuenta para calcular el estado de las mismas al turno siguiente. Todas las células se actualizan simultáneamente en cada turno, siguiendo estas reglas:
+El "tablero de juego" es una malla plana formada por cuadrados (las "células") que se extiende por el infinito en todas las direcciones. Por tanto, cada célula tiene 8 "vecinas", que son las que están próximas a ella, incluidas las diagonales. Las células tienen dos estados: están "vivas" o "muertas" (o "encendidas" y "apagadas"). El estado de las células evoluciona a lo largo de unidades de tiempo discretas (se podría decir que por turnos). El estado de todas las células se tiene en cuenta para calcular el estado de las mismas al turno siguiente. Todas las células se actualizan simultáneamente en cada turno, siguiendo estas reglas:
 
 1. **Una célula muerta con exactamente 3 células vecinas vivas "nace" (es decir, al turno siguiente estará viva).**
 2. **Una célula viva con 2 o 3 células vecinas vivas sigue viva, en otro caso muere (por "soledad" o "superpoblación").**
@@ -24,18 +24,18 @@ margin-right: auto;max-width:900px;
   width: 100%;">
 
 ### Controles
-La ventana de controles permitirá arrancar el cómputo de estados del juego con el botón Play (podrás parar el juego con Stop). Además observaremos la población de cada estado y la generación.
+La ventana de controles permitirá arrancar el cómputo de estados del juego. Con el botón Play (podrás parar el juego con Stop). Además, observaremos la población de cada estado y la generación.
 
 [<img src="./images/contro-gui.png" alt="Controles" style="display: block; margin-left: auto;
 margin-right: auto;max-width:350px;
   width: 100%;">](/images/contro-gui.png)
 
 #### Guardando y cargando patrones
-Una parte importante de la GUI es que podremos guardar y cargar patrones. Para guardar patrones simplemente dibujaremos uno previamente en la rejilla haciendo clic en los lugares deseados. Y luego, en la ventana de controles el botón "Save" creará un archivo formato **jglf**. Esto con el fin de evitar errores al cargar un archivo.
+Una parte a resaltar de la GUI es que podremos guardar y cargar patrones. Para guardar patrones simplemente dibujaremos uno previamente en la rejilla haciendo clic en los lugares deseados. Y luego, en la ventana de controles el botón "Save" creará un archivo formato **jglf**. Esto con el fin de evitar errores al cargar un archivo.
 
 ![Guardar archivo](/images/save-dialog.png)
 
-Una vez tengamos nuestros propios patrones, podremos cargarlos con el botón "Open" que automáticamente limpiara la rejilla y cargará toda la población.
+Una vez tengamos nuestros propios patrones, podremos cargarlos con el botón "Open". Luego, automáticamente limpiará la rejilla y cargará toda la población.
 
 ![Abrir archivo](/images/open-dialog.png)
 ### Rejilla

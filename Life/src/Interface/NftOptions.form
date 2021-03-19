@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="NFT Generator"/>
+    <Property name="alwaysOnTop" type="boolean" value="true"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
+                              <Component id="LblStable" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="CheckPopulationLimit" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="SpPopulationLimit" min="-2" pref="59" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="SpStable" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="LblInput" max="32767" attributes="0"/>
+                          <Component id="LblOutput" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="TxtInput" max="32767" attributes="0"/>
+                          <Component id="TxtOutput" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="BtnInput" alignment="1" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="BtnOuput" alignment="1" min="-2" pref="33" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="CheckStopZero" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="CheckStable" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="LblGenerationLimit" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="SpGenLimit" min="-2" pref="62" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="CheckRandColors" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="PbGeneration" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="BtnBackground" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="BtnGridBorder" min="-2" pref="95" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="BtnState" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="BtnStart" min="-2" pref="89" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="CheckStopZero" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="CheckStable" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LblStable" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SpStable" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="CheckPopulationLimit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SpPopulationLimit" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LblGenerationLimit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SpGenLimit" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="TxtInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BtnInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LblInput" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="TxtOutput" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BtnOuput" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LblOutput" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="CheckRandColors" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="BtnBackground" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BtnGridBorder" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BtnState" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="PbGeneration" min="-2" pref="19" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="BtnStart" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JCheckBox" name="CheckStopZero">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Stop at zero population"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CheckStable">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Stop at stable population"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblStable">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Extra generation limit for stable population:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CheckPopulationLimit">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Stop at population limit:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblGenerationLimit">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generation limit*:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TxtInput">
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnInput">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="..."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblInput">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Input File:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblOutput">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="Outpu folder:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TxtOutput">
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnOuput">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="..."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SpStable">
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SpPopulationLimit">
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SpGenLimit">
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CheckRandColors">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Random colors"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnBackground">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Background"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnGridBorder">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Grid Border"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnState">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="State"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnStart">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Start"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JProgressBar" name="PbGeneration">
+    </Component>
+  </SubComponents>
+</Form>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 gabri
+ * Copyright (C) 2020 Gabriel Bastidas
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,20 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package life;
+package Interface;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import Business.FileManager;
 
 /**
  *
@@ -86,6 +93,7 @@ public class ControlGui extends javax.swing.JFrame {
         lblPopulation = new javax.swing.JLabel();
         lblGeneration = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        BtnNFT = new javax.swing.JButton();
 
         fileDialog.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         fileDialog.setApproveButtonText("");
@@ -159,6 +167,13 @@ public class ControlGui extends javax.swing.JFrame {
         lblGeneration.setText("0");
         lblGeneration.setToolTipText("");
 
+        BtnNFT.setText("NFT Gen");
+        BtnNFT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNFTActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,21 +189,23 @@ public class ControlGui extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnGithub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnPlayPause, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(generation, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                                    .addComponent(population, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblGeneration, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblPopulation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnPlayPause, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                                    .addComponent(BtnNFT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(generation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(population, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblGeneration, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPopulation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -201,24 +218,25 @@ public class ControlGui extends javax.swing.JFrame {
                     .addComponent(btnClear))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGap(5, 5, 5)
+                        .addComponent(btnPlayPause))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(population)
                             .addComponent(lblPopulation))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(generation)
-                            .addComponent(lblGeneration)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPlayPause, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblGeneration)
+                            .addComponent(BtnNFT))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAbout)
                     .addComponent(btnGithub))
-                .addContainerGap())
+                .addGap(0, 5, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,6 +245,7 @@ public class ControlGui extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         GameWindow.setVisible(true);
+        this.toFront();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -254,7 +273,8 @@ public class ControlGui extends javax.swing.JFrame {
                 );
                 if (reply == JOptionPane.YES_OPTION) {
                     if (path.delete()) {
-                        LifeFile.saveFile(path.toString(), GameWindow.matrix, this);
+                        FileManager.saveFile(path.toString(), GameWindow.matrix, this);
+                        GameWindow.setTitle("Game of Life @ " + path.toString());
                     } else {
                         JOptionPane.showConfirmDialog(
                                 this,
@@ -266,7 +286,8 @@ public class ControlGui extends javax.swing.JFrame {
                     }
                 }
             } else {
-                LifeFile.saveFile(path.toString(), GameWindow.matrix, this);
+                FileManager.saveFile(path.toString(), GameWindow.matrix, this);
+                GameWindow.setTitle("Game of Life @ " + path.toString());
             }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -277,7 +298,8 @@ public class ControlGui extends javax.swing.JFrame {
         if (fd == JFileChooser.APPROVE_OPTION) {
             File path = fileDialog.getSelectedFile();
             GameWindow.clear();
-            GameWindow.setMatrix(LifeFile.loadFile(path.toString(), this));
+            GameWindow.setMatrix(FileManager.loadFile(path.toString(), this));
+            GameWindow.setTitle("Game of Life @ " + path.toString());
         }
     }//GEN-LAST:event_btnOpenActionPerformed
 
@@ -298,7 +320,7 @@ public class ControlGui extends javax.swing.JFrame {
             this.runHandle = scheduler.scheduleAtFixedRate(
                     run,
                     0,
-                    500,
+                    1000,
                     MILLISECONDS
             );
             //GameWindow.changeState(); //Used for testing
@@ -310,6 +332,42 @@ public class ControlGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPlayPauseActionPerformed
 
+    private void BtnNFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNFTActionPerformed
+        int width = 500;
+        int height = 500;
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, 0, width, height);
+        g2d.setColor(Color.MAGENTA);
+        g2d.drawPolygon(new int[]{0, 10, 10, 0}, new int[]{0, 0, 10, 10}, 4);
+        g2d.setColor(Color.red);
+        g2d.fillPolygon(new int[]{1, 10, 10, 1}, new int[]{1, 1, 10, 10}, 4);
+        g2d.dispose();
+
+        File file = new File("D:\\MEGA\\DataSamples\\rebelion_en_la_granja_orwell.txt");
+//        try {
+//            ImageIO.write(bufferedImage, "png", file);
+//        } catch (IOException ex) {
+//            Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        try {
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            boolean[][] matrix = new boolean[50][50];
+            int j = 0;
+            for (int i = 0; i < bytes.length; i++) {
+                matrix[i % 50][j % 50] = bytes[i] % 2 != 0;
+                if (i % 50 == 0) {
+                    j++;
+                }
+            }
+            GameWindow.clear();
+            GameWindow.setMatrix(matrix);
+        } catch (IOException ex) {
+            Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnNFTActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -319,24 +377,13 @@ public class ControlGui extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ControlGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ControlGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ControlGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ControlGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         //</editor-fold>
-
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            JOptionPane.showMessageDialog(null, e, "Look and feel error", 0);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new ControlGui().setVisible(true);
@@ -344,6 +391,7 @@ public class ControlGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnNFT;
     private javax.swing.JButton btnAbout;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnGithub;

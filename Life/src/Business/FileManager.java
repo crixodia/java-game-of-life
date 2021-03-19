@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package life;
+package Business;
 
+import Interface.LifeGui;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,20 +30,22 @@ import javax.swing.JOptionPane;
  *
  * @author Cristian Bastidas
  */
-public class LifeFile {
+public class FileManager {
 
     private final static Pattern POSITION_FORMAT = Pattern.compile("[0-9]+:[0-9]+;");
 
     /**
      * This function loads a file with the grid's values
+     *
      * @param path Directory's path for loading a file with values
      * @param frame A JFrame
-     * @return A matrix[ROWS][COLS] where rows and columns are gotten from LifeGui
+     * @return A matrix[ROWS][COLS] where rows and columns are gotten from
+     * LifeGui
      */
-    public static boolean[][] loadFile(String path, JFrame frame) {        
+    public static boolean[][] loadFile(String path, JFrame frame) {
         boolean[][] matrix = new boolean[LifeGui.ROWS][LifeGui.COLS];
         try {
-            try (FileReader reader = new FileReader(path)) {
+            try ( FileReader reader = new FileReader(path)) {
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
@@ -68,12 +71,13 @@ public class LifeFile {
                     "LifeGUI",
                     JOptionPane.ERROR_MESSAGE
             );
-        }        
+        }
         return matrix;
     }
 
     /**
      * This function save a file with the grid's values
+     *
      * @param path Directory's path for saving a file with values
      * @param matrix Grid's matrix with values
      * @param frame A frame
@@ -88,11 +92,17 @@ public class LifeFile {
             }
         }
         try {
-            try (FileWriter writer = new FileWriter(path, true)) {
+            try ( FileWriter writer = new FileWriter(path, true)) {
                 writer.write(content);
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(frame, e.getMessage(), "LifeGUI", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public static boolean[][] transformFile(String path) {
+        boolean[][] matrix = new boolean[LifeGui.ROWS][LifeGui.COLS];
+        return matrix;
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 gabri
+ * Copyright (C) 2020 Gabriel Bastidas
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package life;
+package Interface;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -178,7 +178,7 @@ public class LifeGui extends JFrame {
         }
     }
 
-    //Allows infinity grid
+    //Allows toroid grid
     private int rcCheck(int i, int rc) {
         int r = i;
         if (i < 0) {
@@ -190,7 +190,7 @@ public class LifeGui extends JFrame {
     }
 
     /**
-     * Changes the grid's state TODO:This method will be used for step by step
+     * Changes the grid's state TODO: This method will be used for step by step
      * feature
      */
     public void changeState() {

@@ -17,12 +17,8 @@
 package Interface;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -35,6 +31,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import Business.FileManager;
+import Business.GifSequenceWriter;
+import java.awt.image.BufferedImage;
+import java.nio.file.Files;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.imageio.stream.ImageOutputStream;
 
 /**
  *
@@ -49,6 +51,10 @@ public class ControlGui extends javax.swing.JFrame {
     final Runnable run;
     ScheduledFuture<?> runHandle;
 
+    File output;
+    Color bck, grid, state;
+    boolean nftOption = false;
+
     /**
      * Creates new form ControlGui
      */
@@ -56,8 +62,16 @@ public class ControlGui extends javax.swing.JFrame {
         this.scheduler = Executors.newScheduledThreadPool(1);
         this.run = () -> {
             GameWindow.changeState();
-            lblPopulation.setText(Integer.toString(GameWindow.population));
-            lblGeneration.setText(Integer.toString(GameWindow.generation));
+            int genAux = GameWindow.generation, popAux = GameWindow.population;
+            if (nftOption) {
+                try {
+                    GameWindow.genImage(output, bck, grid, state);
+                } catch (IOException ex) {
+                    Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            lblPopulation.setText(Integer.toString(popAux));
+            lblGeneration.setText(Integer.toString(genAux));
         };
         //this.runHandle = scheduler.scheduleAtFixedRate(run, 1, 3, SECONDS);
 
@@ -250,6 +264,7 @@ public class ControlGui extends javax.swing.JFrame {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         GameWindow.clear();
+        nftOption = false;
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
@@ -316,43 +331,61 @@ public class ControlGui extends javax.swing.JFrame {
 
     private void btnPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayPauseActionPerformed
         if (btnPlayPause.isSelected()) {
-            //System.out.println("Game has started");
+            //Game has started
             this.runHandle = scheduler.scheduleAtFixedRate(
                     run,
                     0,
-                    1000,
+                    500,
                     MILLISECONDS
             );
-            //GameWindow.changeState(); //Used for testing
             btnPlayPause.setText("Stop");
         } else {
-            //System.out.println("Game has stopped");
+            //Game has stopped
             runHandle.cancel(true);
+            if (nftOption) {
+                // grab the output image type from the first image in the sequence
+
+                // create a new BufferedOutputStream with the last argument
+                ImageOutputStream out;
+                GifSequenceWriter writer;
+                try {
+                    out = new FileImageOutputStream(new File(output, "animation.gif"));
+                    writer = new GifSequenceWriter(out, ImageIO.read(GameWindow.getImagesList()[0]).getType(), 1, true);
+                    for (File imagesList : GameWindow.getImagesList()) {
+                        BufferedImage nextImage = ImageIO.read(imagesList);
+                        writer.writeToSequence(nextImage);
+                    }
+                    writer.close();
+                    out.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
             btnPlayPause.setText("Play");
         }
     }//GEN-LAST:event_btnPlayPauseActionPerformed
 
     private void BtnNFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNFTActionPerformed
-        int width = 500;
-        int height = 500;
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, 0, width, height);
-        g2d.setColor(Color.MAGENTA);
-        g2d.drawPolygon(new int[]{0, 10, 10, 0}, new int[]{0, 0, 10, 10}, 4);
-        g2d.setColor(Color.red);
-        g2d.fillPolygon(new int[]{1, 10, 10, 1}, new int[]{1, 1, 10, 10}, 4);
-        g2d.dispose();
+        NFT nft = new NFT(this);
+        nft.setVisible(true);
+        this.setEnabled(false);
+        nft.toFront();
+    }//GEN-LAST:event_BtnNFTActionPerformed
 
-        File file = new File("D:\\MEGA\\DataSamples\\rebelion_en_la_granja_orwell.txt");
-//        try {
-//            ImageIO.write(bufferedImage, "png", file);
-//        } catch (IOException ex) {
-//            Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        try {
-            byte[] bytes = Files.readAllBytes(file.toPath());
+    //TODO
+    public void startNFT(
+            File inputFile, File outputFolder,
+            Color background, Color grid, Color state
+    ) throws IOException {
+        this.nftOption = true;
+        this.bck = background;
+        this.grid = grid;
+        this.state = state;
+        this.output = outputFolder;
+
+        if (inputFile.exists()) {
+            byte[] bytes = Files.readAllBytes(inputFile.toPath());
             boolean[][] matrix = new boolean[50][50];
             int j = 0;
             for (int i = 0; i < bytes.length; i++) {
@@ -363,10 +396,8 @@ public class ControlGui extends javax.swing.JFrame {
             }
             GameWindow.clear();
             GameWindow.setMatrix(matrix);
-        } catch (IOException ex) {
-            Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_BtnNFTActionPerformed
+    }
 
     /**
      * @param args the command line arguments

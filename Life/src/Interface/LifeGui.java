@@ -19,12 +19,17 @@ package Interface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -34,7 +39,6 @@ import javax.swing.*;
 public class LifeGui extends JFrame {
 
     private HashMap componentMap;
-
     /**
      * Grid's rows
      */
@@ -51,6 +55,8 @@ public class LifeGui extends JFrame {
     public boolean[][] matrix;
     public int population;
     public int generation;
+
+    ArrayList<File> imagesList = new ArrayList<>();
 
     private final JPanel container;
 
@@ -159,6 +165,7 @@ public class LifeGui extends JFrame {
                 }
             }
         }
+        imagesList = new ArrayList<>();
         this.generation = 0;
     }
 
@@ -241,14 +248,11 @@ public class LifeGui extends JFrame {
                 }
                 if (this.matrix[i][j] && (trueCounter == 2 || trueCounter == 3)) {
                     newMatrix[i][j] = true;
-                    //System.out.println("A cell has resurrected");
                 } else if (!this.matrix[i][j] && trueCounter == 3) {
                     newMatrix[i][j] = true;
-                    //System.out.println("A cell has died");
                 }
             }
         }
-        //System.out.println("Matrix has changed");
         this.setMatrix(newMatrix);
     }
 
@@ -270,6 +274,43 @@ public class LifeGui extends JFrame {
         return population;
     }
 
+    public void genImage(File output, Color bck, Color grid, Color state) throws IOException {
+        int width = 501, height = 501;
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+        g2d.setColor(bck);
+        g2d.fillRect(0, 0, width, height);
+
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                g2d.setColor(grid);
+                g2d.drawPolygon(new int[]{j * 10, j * 10 + 10, j * 10 + 10, j * 10}, new int[]{i * 10, i * 10, i * 10 + 10, i * 10 + 10}, 4);
+                if (matrix[i][j]) {
+                    g2d.setColor(state);
+                    g2d.fillPolygon(new int[]{j * 10 + 1, j * 10 + 10, j * 10 + 10, j * 10 + 1}, new int[]{i * 10 + 1, i * 10 + 1, i * 10 + 10, i * 10 + 10}, 4);
+                }
+            }
+        }
+        g2d.dispose();
+
+        File file = new File(output, this.generation + ".png");
+        try {
+            imagesList.add(file);
+            ImageIO.write(bufferedImage, "png", file);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public File[] getImagesList() {
+        File[] ret = new File[imagesList.size()];
+        for (int i = 0; i < imagesList.size(); i++) {
+            ret[i] = imagesList.get(i);
+        }
+        return ret;
+    }
+
     private class BoxBtn implements ActionListener {
 
         @Override
@@ -281,7 +322,6 @@ public class LifeGui extends JFrame {
             int row = Integer.parseInt(position[0]);
             int col = Integer.parseInt(position[1]);
 
-            //Changing the state
             matrix[row][col] = bxButton.isSelected();
 
             //Feedback | Uncomment if you have problems

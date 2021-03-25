@@ -51,6 +51,6 @@ Puedes descargar algunos patrones como [ejemplos](https://github.com/crixodia/ja
 
 Al generar una animación gif obtendrás algo similar a la siguiente imagen. Podrás definir la posibilidad de un gif en ciclo infinito.
 
-![Life Gif](/examples/GIFGen/Profile_Life_NFT/animation.gif)
+![Life Gif](/examples/GIFgen/Profile_Life_NFT/animation.gif)
 
 🧐 Para sugerencias o preguntas puedes contactar a [@crixodia](https://www.twitter.com/crixodia)

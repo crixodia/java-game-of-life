@@ -18,12 +18,6 @@ El "tablero de juego" es una malla plana y toroidal formada por cuadrados (las "
 
 Extraído de [Wikipedia](https://es.wikipedia.org/wiki/Juego_de_la_vida)
 ## GUI
-Ejecutando el juego notaremos dos ventanas, una con los controles y otra con la rejilla correspondiente al cambio de estados.
-
-<img src="./images/gen-pop2.png" alt="Controles" style="display: block; margin-left: auto;
-margin-right: auto;max-width:900px;
-  width: 100%;">
-
 ### Controles
 La ventana de controles permitirá arrancar el cómputo de estados del juego. Con el botón Play (podrás parar el juego con Stop). Además, observaremos la población de cada estado y su respectiva generación.
 
@@ -46,13 +40,17 @@ En la rejilla visualizaremos el cambio de estados y (cuando el juego esté en pa
 ### Generando animaciones
 Puedes generar animaciones a través del botón especificado en la GUI. Luego deberás proporcionar una ruta de salida para las imágenes generadas y los colores a utilizar. Además, es posible tomar cualquier archivo y convertirlo a un patrón de inicio para el juego basado en los bytes del archivo. Esto con la finalidad de generar diversos patrones sin "dibujarlos" en la rejilla. Algo de utilidad para pruebas rápidas.
 
+[<img src="./images/GIF_dialog.png" alt="GIF" style="display: block; margin-left: auto;
+margin-right: auto;max-width:350px;
+  width: 100%;">](/images/GIF_dialog.png)
+
 ## Ejemplos
 Puedes descargar algunos patrones como [ejemplos](https://github.com/crixodia/java-game-of-life/blob/master/examples/). Uno de los más intrigantes son los osciladores ([osc.jglf](https://github.com/crixodia/java-game-of-life/blob/master/examples/osc.jglf)).
 
 ![Grid Gif](/images/grid-gif.gif)
-Al generar una animación gif obtendrás algo similar a la siguiente imagen. Podrás definir propiedades como tiempo entre cada fotograma, colores usados o la posibilidad de un gif en ciclo infinito.
 
-![Life Gif](/examples/NFTGen/Profile_Life_NFT/animation.gif)
+Al generar una animación gif obtendrás algo similar a la siguiente imagen. Podrás definir la posibilidad de un gif en ciclo infinito.
+
+![Life Gif](/examples/GIFGen/Profile_Life_NFT/animation.gif)
+
 🧐 Para sugerencias o preguntas puedes contactar a [@crixodia](https://www.twitter.com/crixodia)
-
-</div>

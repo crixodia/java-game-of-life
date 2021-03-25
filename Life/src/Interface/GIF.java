@@ -29,16 +29,21 @@ import javax.swing.JFileChooser;
  *
  * @author gabri
  */
-public class NFT extends javax.swing.JFrame {
+public class GIF extends javax.swing.JFrame {
 
     /**
-     * Creates new form NFT
+     * Creates new form GIF
      */
-    File inputPath, outputPath;
+    File inputPath,
+
+    /**
+     * Creates new form GIF
+     */
+    outputPath;
     Color background, grid_border, state;
     ControlGui frame;
 
-    public NFT(ControlGui life) {
+    public GIF(ControlGui life) {
         frame = life;
         initComponents();
     }
@@ -66,7 +71,7 @@ public class NFT extends javax.swing.JFrame {
         TxtOutput = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("NFT Generator");
+        setTitle("GIF Generator");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -208,7 +213,7 @@ public class NFT extends javax.swing.JFrame {
                     state
             );
         } catch (IOException ex) {
-            Logger.getLogger(NFT.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GIF.class.getName()).log(Level.SEVERE, null, ex);
         }
         frame.setEnabled(true);
         this.dispose();
@@ -281,7 +286,7 @@ public class NFT extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NFT(null).setVisible(true);
+                new GIF(null).setVisible(true);
             }
         });
     }

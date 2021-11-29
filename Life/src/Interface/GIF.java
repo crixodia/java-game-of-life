@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 gabri
+ * Copyright (C) 2021 Cristian Bastidas
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package Interface;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,11 +36,10 @@ public class GIF extends javax.swing.JFrame {
      * Creates new form GIF
      */
     File inputPath,
-
-    /**
-     * Creates new form GIF
-     */
-    outputPath;
+            /**
+             * Creates new form GIF
+             */
+            outputPath;
     Color background, grid_border, state;
     ControlGui frame;
 
@@ -212,7 +212,7 @@ public class GIF extends javax.swing.JFrame {
                     grid_border,
                     state
             );
-        } catch (IOException ex) {
+        } catch (IOException | NoSuchAlgorithmException ex) {
             Logger.getLogger(GIF.class.getName()).log(Level.SEVERE, null, ex);
         }
         frame.setEnabled(true);
@@ -284,10 +284,8 @@ public class GIF extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GIF(null).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GIF(null).setVisible(true);
         });
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Gabriel Bastidas
+ * Copyright (C) 2020 Cristian Bastidas
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ import Business.FileManager;
 import Business.GifSequenceWriter;
 import java.awt.image.BufferedImage;
 import java.nio.file.Files;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.imageio.stream.ImageOutputStream;
@@ -351,24 +353,29 @@ public class ControlGui extends javax.swing.JFrame {
                 // grab the output image type from the first image in the sequence
 
                 // create a new BufferedOutputStream with the last argument
-                ImageOutputStream out;
-                GifSequenceWriter writer;
-                try {
-                    out = new FileImageOutputStream(new File(output, "animation.gif"));
-                    writer = new GifSequenceWriter(
-                            out,
-                            ImageIO.read(GameWindow.getImagesList()[0]).getType(), 1, this.CheckLoop.isSelected()
-                    );
-                    for (File imagesList : GameWindow.getImagesList()) {
-                        BufferedImage nextImage = ImageIO.read(imagesList);
-                        writer.writeToSequence(nextImage);
+                boolean looped = this.CheckLoop.isSelected();
+                Thread genGif = new Thread(() -> {
+                    ImageOutputStream out;
+                    GifSequenceWriter writer;
+                    try {
+                        out = new FileImageOutputStream(new File(output, "animation.gif"));
+                        writer = new GifSequenceWriter(
+                                out,
+                                ImageIO.read(GameWindow.getImagesList()[0]).getType(),
+                                1,
+                                looped
+                        );
+                        for (File imagesList : GameWindow.getImagesList()) {
+                            BufferedImage nextImage = ImageIO.read(imagesList);
+                            writer.writeToSequence(nextImage);
+                        }
+                        writer.close();
+                        out.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    writer.close();
-                    out.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+                });
+                genGif.start();
             }
             btnPlayPause.setText("Play");
         }
@@ -381,11 +388,38 @@ public class ControlGui extends javax.swing.JFrame {
         nft.toFront();
     }//GEN-LAST:event_BtnNFTActionPerformed
 
+    // Hexadecimal hashed value
+    private static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
+    public static String convertByteArraysToBinary(byte[] input) {
+
+        StringBuilder result = new StringBuilder();
+        for (byte b : input) {
+            int val = b;
+            for (int i = 0; i < 8; i++) {
+                result.append((val & 128) == 0 ? 0 : 1);      // 128 = 1000 0000
+                val <<= 1;
+            }
+        }
+        return result.toString();
+
+    }
+
     //TODO
     public void startNFT(
             File inputFile, File outputFolder,
             Color background, Color grid, Color state
-    ) throws IOException {
+    ) throws IOException, NoSuchAlgorithmException {
         this.nftOption = true;
         this.bck = background;
         this.grid = grid;
@@ -393,12 +427,21 @@ public class ControlGui extends javax.swing.JFrame {
         this.output = outputFolder;
 
         if (inputFile.exists()) {
-            byte[] bytes = Files.readAllBytes(inputFile.toPath());
+            final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+            final byte[] bytes = digest.digest(Files.readAllBytes(inputFile.toPath()));
+
+            String hash = bytesToHex(bytes);
+            String binary = convertByteArraysToBinary(hash.getBytes());
+            System.out.println(binary);
             boolean[][] matrix = new boolean[50][50];
-            int j = 0;
-            for (int i = 0; i < bytes.length; i++) {
-                matrix[i % 50][j % 50] = bytes[i] % 2 != 0;
-                if (i % 50 == 0) {
+
+            int j = 0, k = 0;
+            for (int i = 0; i < binary.length(); i++) {
+                matrix[k][j] = binary.charAt(i) == '1';
+                if (j == 49) {
+                    j = 0;
+                    k++;
+                } else {
                     j++;
                 }
             }

@@ -63,8 +63,6 @@ public class ControlGui extends javax.swing.JFrame {
     public ControlGui() {
         this.scheduler = Executors.newScheduledThreadPool(1);
         this.run = () -> {
-            GameWindow.changeState();
-            int genAux = GameWindow.generation, popAux = GameWindow.population;
             if (nftOption) {
                 try {
                     GameWindow.genImage(output, bck, grid, state);
@@ -72,6 +70,8 @@ public class ControlGui extends javax.swing.JFrame {
                     Logger.getLogger(ControlGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            GameWindow.changeState();
+            int genAux = GameWindow.generation, popAux = GameWindow.population;
             lblPopulation.setText(Integer.toString(popAux));
             lblGeneration.setText(Integer.toString(genAux));
         };

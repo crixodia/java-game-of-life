@@ -23,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 
@@ -48,16 +49,18 @@ public class GIF extends javax.swing.JFrame {
         frame = life;
         inputPath = life.input;
         outputPath = life.output;
-        
+
         initComponents();
-        
+
         if (inputPath != null) {
             TxtInput.setText(inputPath.toString());
         }
-        
+
         if (outputPath != null) {
             TxtOutput.setText(outputPath.toString());
         }
+
+        this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("image.png")).getImage());
     }
 
     /**

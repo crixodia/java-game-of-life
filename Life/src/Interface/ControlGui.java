@@ -40,6 +40,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.imageio.stream.ImageOutputStream;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -88,6 +89,8 @@ public class ControlGui extends javax.swing.JFrame {
         fileDialog.addChoosableFileFilter(ff);
         fileDialog.setFileFilter(ff);
         fileDialog.setSelectedFile(new File("new.jglf"));   //Suggested filename
+
+        this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("grid.png")).getImage());
     }
 
     /**

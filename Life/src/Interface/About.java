@@ -16,6 +16,7 @@
  */
 package Interface;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -26,7 +27,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Cristian Bastidas
  */
 public class About extends JFrame {
-    
+
     private JFrame parent;
 
     /**
@@ -35,6 +36,8 @@ public class About extends JFrame {
     public About(JFrame parent) {
         this.parent = parent;
         initComponents();
+
+        this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("about.png")).getImage());
     }
 
     /**
@@ -103,7 +106,7 @@ public class About extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
+        parent.setEnabled(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

@@ -38,9 +38,9 @@ import javax.swing.*;
  */
 public class LifeGui extends JFrame {
 
-    public Color backgroudColor = Color.ORANGE;
+    public Color backgroudColor = Color.CYAN;
     public Color gridColor = Color.GRAY;
-    public Color cellColor = Color.RED;
+    public Color cellColor = Color.BLUE;
 
     private HashMap componentMap;
 
@@ -107,7 +107,7 @@ public class LifeGui extends JFrame {
                 counter++;
             }
         }
-
+        this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("eye.png")).getImage());
         createComponentMap();
     }
 
@@ -346,9 +346,13 @@ public class LifeGui extends JFrame {
             int row = Integer.parseInt(position[0]);
             int col = Integer.parseInt(position[1]);
 
-            bxButton.setBackground(cellColor);
-
             matrix[row][col] = bxButton.isSelected();
+
+            if (matrix[row][col]) {
+                bxButton.setBackground(cellColor);
+            } else {
+                bxButton.setBackground(backgroudColor);
+            }
         }
     }
 }

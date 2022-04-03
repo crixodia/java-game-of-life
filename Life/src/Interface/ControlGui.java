@@ -32,6 +32,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import Business.FileManager;
 import Business.GifSequenceWriter;
+import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.image.BufferedImage;
 import java.nio.file.Files;
 import java.security.MessageDigest;
@@ -53,7 +54,8 @@ public class ControlGui extends javax.swing.JFrame {
     final Runnable run;
     ScheduledFuture<?> runHandle;
 
-    File output;
+    public File input, output;
+
     Color bck, grid, state;
     boolean nftOption = false;
 
@@ -121,7 +123,10 @@ public class ControlGui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game of Life");
+        setAlwaysOnTop(true);
+        setName("Control"); // NOI18N
         setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -275,8 +280,10 @@ public class ControlGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        About aboutWindow = new About();
+        About aboutWindow = new About(this);
         aboutWindow.setVisible(true);
+        this.setEnabled(false);
+        aboutWindow.toFront();
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -339,6 +346,12 @@ public class ControlGui extends javax.swing.JFrame {
     private void btnPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayPauseActionPerformed
         if (btnPlayPause.isSelected()) {
             //Game has started
+            btnSave.setEnabled(false);
+            btnOpen.setEnabled(false);
+            btnClear.setEnabled(false);
+            BtnNFT.setEnabled(false);
+            CheckLoop.setEnabled(false);
+
             this.runHandle = scheduler.scheduleAtFixedRate(
                     run,
                     0,
@@ -347,11 +360,15 @@ public class ControlGui extends javax.swing.JFrame {
             );
             btnPlayPause.setText("Stop");
         } else {
+            btnSave.setEnabled(true);
+            btnOpen.setEnabled(true);
+            btnClear.setEnabled(true);
+            BtnNFT.setEnabled(true);
+            CheckLoop.setEnabled(true);
+
             //Game has stopped
             runHandle.cancel(true);
             if (nftOption) {
-                // grab the output image type from the first image in the sequence
-
                 // create a new BufferedOutputStream with the last argument
                 boolean looped = this.CheckLoop.isSelected();
                 Thread genGif = new Thread(() -> {
@@ -441,6 +458,7 @@ public class ControlGui extends javax.swing.JFrame {
         this.bck = background;
         this.grid = grid;
         this.state = state;
+        this.input = inputFile;
         this.output = outputFolder;
 
         if (inputFile.exists()) {
@@ -462,6 +480,11 @@ public class ControlGui extends javax.swing.JFrame {
                     j++;
                 }
             }
+
+            GameWindow.backgroudColor = background;
+            GameWindow.gridColor = grid;
+            GameWindow.cellColor = state;
+
             GameWindow.clear();
             GameWindow.setMatrix(matrix);
         }
@@ -471,18 +494,12 @@ public class ControlGui extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        //</editor-fold>
         try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
-        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            UIManager.setLookAndFeel(new FlatDarkLaf()); //UIManager.getSystemLookAndFeelClassName()
+        } catch (UnsupportedLookAndFeelException e) {
             JOptionPane.showMessageDialog(null, e, "Look and feel error", 0);
         }
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new ControlGui().setVisible(true);

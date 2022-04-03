@@ -46,7 +46,18 @@ public class GIF extends javax.swing.JFrame {
      */
     public GIF(ControlGui life) {
         frame = life;
+        inputPath = life.input;
+        outputPath = life.output;
+        
         initComponents();
+        
+        if (inputPath != null) {
+            TxtInput.setText(inputPath.toString());
+        }
+        
+        if (outputPath != null) {
+            TxtOutput.setText(outputPath.toString());
+        }
     }
 
     /**
@@ -73,6 +84,9 @@ public class GIF extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GIF Generator");
+        setAlwaysOnTop(true);
+        setName("Gif"); // NOI18N
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -226,10 +240,10 @@ public class GIF extends javax.swing.JFrame {
      * @return a random color
      */
     private Color randomColor() {
-        Random rand = new Random(System.currentTimeMillis());
-        float r = rand.nextInt(256) / 2;
-        float g = rand.nextInt(256) / 2;
-        float b = rand.nextInt(256) / 2;
+        Random rand = new Random();
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
         return new Color(r, g, b);
     }
 
@@ -241,6 +255,7 @@ public class GIF extends javax.swing.JFrame {
 
     private void BtnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInputActionPerformed
         fd.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fd.setCurrentDirectory(inputPath);
         int _fd = fd.showDialog(this, "Open");
         if (_fd == JFileChooser.APPROVE_OPTION) {
             inputPath = fd.getSelectedFile();
@@ -250,6 +265,7 @@ public class GIF extends javax.swing.JFrame {
 
     private void BtnOuputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOuputActionPerformed
         fd.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fd.setCurrentDirectory(outputPath);
         int _fd = fd.showDialog(this, "Open");
         if (_fd == JFileChooser.APPROVE_OPTION) {
             outputPath = fd.getSelectedFile();
@@ -258,7 +274,7 @@ public class GIF extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnOuputActionPerformed
 
     private void BtnBackgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBackgroundActionPerformed
-        Color newColor = JColorChooser.showDialog(null, "Background color", Color.BLACK);
+        Color newColor = JColorChooser.showDialog(this, "Background color", Color.BLACK);
         if (newColor != null) {
             this.BtnBackground.setBackground(newColor);
             background = newColor;
@@ -266,7 +282,7 @@ public class GIF extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnBackgroundActionPerformed
 
     private void BtnGridBorderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGridBorderActionPerformed
-        Color newColor = JColorChooser.showDialog(null, "Border color", Color.BLACK);
+        Color newColor = JColorChooser.showDialog(this, "Border color", Color.BLACK);
         if (newColor != null) {
             this.BtnGridBorder.setBackground(newColor);
             grid_border = newColor;
@@ -274,7 +290,7 @@ public class GIF extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnGridBorderActionPerformed
 
     private void BtnStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnStateActionPerformed
-        Color newColor = JColorChooser.showDialog(null, "Border color", Color.BLACK);
+        Color newColor = JColorChooser.showDialog(this, "Border color", Color.BLACK);
         if (newColor != null) {
             this.BtnState.setBackground(newColor);
             state = newColor;

@@ -16,6 +16,7 @@
  */
 package Interface;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -24,12 +25,15 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Cristian Bastidas
  */
-public class About extends javax.swing.JFrame {
+public class About extends JFrame {
+    
+    private JFrame parent;
 
     /**
      * Creates new form About
      */
-    public About() {
+    public About(JFrame parent) {
+        this.parent = parent;
         initComponents();
     }
 
@@ -47,6 +51,7 @@ public class About extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("About...");
+        setAlwaysOnTop(true);
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setName("about"); // NOI18N
         setResizable(false);
@@ -106,6 +111,7 @@ public class About extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        parent.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
@@ -143,7 +149,7 @@ public class About extends javax.swing.JFrame {
         }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new About().setVisible(true);
+            new About(null).setVisible(true);
         });
     }
 

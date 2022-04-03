@@ -38,6 +38,10 @@ import javax.swing.*;
  */
 public class LifeGui extends JFrame {
 
+    public Color backgroudColor = Color.ORANGE;
+    public Color gridColor = Color.GRAY;
+    public Color cellColor = Color.RED;
+
     private HashMap componentMap;
 
     // GRID ROWS
@@ -86,14 +90,10 @@ public class LifeGui extends JFrame {
             BoxBtn listener = new BoxBtn();
 
             //Set the name according to the array for the game
-            bxButton.setName(
-                    Integer.toString(counterRow)
-                    + ','
-                    + Integer.toString(counterCol)
-            );
+            bxButton.setName(Integer.toString(counterRow) + ',' + Integer.toString(counterCol));
 
-            bxButton.setBackground(Color.darkGray);
-            bxButton.setBorder(BorderFactory.createLineBorder(Color.gray));
+            bxButton.setBackground(backgroudColor);
+            bxButton.setBorder(BorderFactory.createLineBorder(gridColor));
 
             bxButton.addActionListener(listener);
 
@@ -107,6 +107,7 @@ public class LifeGui extends JFrame {
                 counter++;
             }
         }
+
         createComponentMap();
     }
 
@@ -155,6 +156,8 @@ public class LifeGui extends JFrame {
                 JToggleButton bxButton = (JToggleButton) getComponentByName(i + "," + j);
                 if (bxButton != null) {
                     bxButton.setSelected(false);
+                    bxButton.setBackground(backgroudColor);
+                    bxButton.setBorder(BorderFactory.createLineBorder(gridColor));
                     this.matrix[i][j] = false;
                 }
             }
@@ -173,6 +176,9 @@ public class LifeGui extends JFrame {
                     bxButton.setSelected(this.matrix[i][j]);
                     if (this.matrix[i][j]) {
                         this.population++;
+                        bxButton.setBackground(cellColor);
+                    } else {
+                        bxButton.setBackground(backgroudColor);
                     }
                 }
             }
@@ -339,6 +345,8 @@ public class LifeGui extends JFrame {
             String[] position = bxButton.getName().split(",");
             int row = Integer.parseInt(position[0]);
             int col = Integer.parseInt(position[1]);
+
+            bxButton.setBackground(cellColor);
 
             matrix[row][col] = bxButton.isSelected();
         }

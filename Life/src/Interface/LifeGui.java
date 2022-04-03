@@ -39,19 +39,13 @@ import javax.swing.*;
 public class LifeGui extends JFrame {
 
     private HashMap componentMap;
-    /**
-     * Grid's rows
-     */
+
+    // GRID ROWS
     public static final int ROWS = 50;
 
-    /**
-     * Grid's columns
-     */
+    // GRID COLUMNS
     public static final int COLS = 50;
 
-    /**
-     * Values to select grid's boxes
-     */
     public boolean[][] matrix;
     public int population;
     public int generation;
@@ -116,7 +110,7 @@ public class LifeGui extends JFrame {
         createComponentMap();
     }
 
-    //Creates a HashMap wuit the components created in the form
+    //Creates a HashMap with the components created in the form
     private void createComponentMap() {
         componentMap = new HashMap<String, Component>();
         List<Component> components = getAllComponents(this);
@@ -141,8 +135,8 @@ public class LifeGui extends JFrame {
     /**
      * Search for a component. You must give its name
      *
-     * @param name Component's name
-     * @return A swing component
+     * @param name component's name
+     * @return a swing component
      */
     public Component getComponentByName(String name) {
         if (componentMap.containsKey(name)) {
@@ -153,7 +147,7 @@ public class LifeGui extends JFrame {
     }
 
     /**
-     * Clear the grid | Before, All boxes are unselected
+     * Clears the grid | Before, All boxes are unselected
      */
     public void clear() {
         for (int i = 0; i < ROWS; i++) {
@@ -169,7 +163,7 @@ public class LifeGui extends JFrame {
         this.generation = 0;
     }
 
-    //Updates boolean values from the matrix
+    // Updates boolean values from the matrix
     private void reload() {
         this.population = 0;
         for (int i = 0; i < ROWS; i++) {
@@ -185,7 +179,7 @@ public class LifeGui extends JFrame {
         }
     }
 
-    //Allows toroid grid
+    // Allows toroid grid
     private int rcCheck(int i, int rc) {
         int r = i;
         if (i < 0) {
@@ -257,7 +251,7 @@ public class LifeGui extends JFrame {
     }
 
     /**
-     * Setting boolean values and reloading the grid
+     * Setting Boolean values and reloading the grid
      *
      * @param matrix a matrix duh!
      */
@@ -266,14 +260,33 @@ public class LifeGui extends JFrame {
         reload();
     }
 
+    /**
+     * Gets the grid as a Boolean matrix
+     *
+     * @return the state cells matrix
+     */
     public boolean[][] getMatrix() {
         return matrix;
     }
 
+    /**
+     * Get current populations (living cells)
+     *
+     * @return the number of living cells
+     */
     public int getPopulation() {
         return population;
     }
 
+    /**
+     * Generates the animation
+     *
+     * @param output the gif's filename
+     * @param bck background color
+     * @param grid grid color
+     * @param state cell color
+     * @throws IOException
+     */
     public void genImage(File output, Color bck, Color grid, Color state) throws IOException {
         int width = 501, height = 501;
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -303,6 +316,11 @@ public class LifeGui extends JFrame {
 
     }
 
+    /**
+     * Creates a list of all temporary images paths
+     *
+     * @return a list with all paths
+     */
     public File[] getImagesList() {
         File[] ret = new File[imagesList.size()];
         for (int i = 0; i < imagesList.size(); i++) {
@@ -323,13 +341,6 @@ public class LifeGui extends JFrame {
             int col = Integer.parseInt(position[1]);
 
             matrix[row][col] = bxButton.isSelected();
-
-            //Feedback | Uncomment if you have problems
-            /*System.out.println(
-                    Arrays.toString(position)
-                    + " has changed to: "
-                    + bxButton.isSelected()
-            );*/
         }
     }
 }

@@ -16,22 +16,18 @@
  */
 package Interface;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
- * @author gabri
+ * @author Cristian Bastidas
  */
 public class About extends javax.swing.JFrame {
 
     /**
      * Creates new form About
-     *
-     * @param control
-     * @param grid
      */
     public About() {
         initComponents();
@@ -146,10 +142,8 @@ public class About extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e, "Look and feel error", 0);
         }
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new About().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new About().setVisible(true);
         });
     }
 

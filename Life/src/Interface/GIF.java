@@ -28,21 +28,22 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author gabri
+ * @author Cristian Bastidas
  */
 public class GIF extends javax.swing.JFrame {
 
     /**
      * Creates new form GIF
      */
-    File inputPath,
-            /**
-             * Creates new form GIF
-             */
-            outputPath;
+    File inputPath, outputPath;
     Color background, grid_border, state;
     ControlGui frame;
 
+    /**
+     * Start the GIF control form
+     *
+     * @param life the grid's form
+     */
     public GIF(ControlGui life) {
         frame = life;
         initComponents();
@@ -219,11 +220,16 @@ public class GIF extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BtnStartActionPerformed
 
+    /**
+     * Gets a random color
+     *
+     * @return a random color
+     */
     private Color randomColor() {
-        Random rand = new Random();
-        float r = rand.nextFloat();
-        float g = rand.nextFloat();
-        float b = rand.nextFloat();
+        Random rand = new Random(System.currentTimeMillis());
+        float r = rand.nextInt(256) / 2;
+        float g = rand.nextInt(256) / 2;
+        float b = rand.nextInt(256) / 2;
         return new Color(r, g, b);
     }
 

@@ -76,7 +76,7 @@ public class FileManager {
     }
 
     /**
-     * This function save a file with the grid's values
+     * Saves a file with the grid's values
      *
      * @param path Directory's path for saving a file with values
      * @param matrix Grid's matrix with values
@@ -99,10 +99,4 @@ public class FileManager {
             JOptionPane.showMessageDialog(frame, e.getMessage(), "LifeGUI", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    public static boolean[][] transformFile(String path) {
-        boolean[][] matrix = new boolean[LifeGui.ROWS][LifeGui.COLS];
-        return matrix;
-    }
-
 }

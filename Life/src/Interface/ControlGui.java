@@ -214,9 +214,9 @@ public class ControlGui extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnPlayPause, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                            .addComponent(BtnNFT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnPlayPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnNFT, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(generation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(population, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -388,7 +388,12 @@ public class ControlGui extends javax.swing.JFrame {
         nft.toFront();
     }//GEN-LAST:event_BtnNFTActionPerformed
 
-    // Hexadecimal hashed value
+    /**
+     * Transforms hash bytes to hash string
+     *
+     * @param hash hash bytes
+     * @return A hash string
+     */
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
         for (int i = 0; i < hash.length; i++) {
@@ -401,25 +406,37 @@ public class ControlGui extends javax.swing.JFrame {
         return hexString.toString();
     }
 
+    /**
+     * Transforms an array of bytes to a binary string
+     *
+     * @param input array of bytes
+     * @return string of binary numbers based on the input
+     */
     public static String convertByteArraysToBinary(byte[] input) {
 
         StringBuilder result = new StringBuilder();
         for (byte b : input) {
             int val = b;
             for (int i = 0; i < 8; i++) {
-                result.append((val & 128) == 0 ? 0 : 1);      // 128 = 1000 0000
+                result.append((val & 128) == 0 ? 0 : 1);
                 val <<= 1;
             }
         }
         return result.toString();
-
     }
 
-    //TODO
-    public void startNFT(
-            File inputFile, File outputFolder,
-            Color background, Color grid, Color state
-    ) throws IOException, NoSuchAlgorithmException {
+    /**
+     * Start the animation process by setting the file hash into the grid
+     *
+     * @param inputFile file for hashing
+     * @param outputFolder folder which will contain all images
+     * @param background background color
+     * @param grid grid color
+     * @param state active cell colors
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
+    public void startNFT(File inputFile, File outputFolder, Color background, Color grid, Color state) throws IOException, NoSuchAlgorithmException {
         this.nftOption = true;
         this.bck = background;
         this.grid = grid;
@@ -462,7 +479,7 @@ public class ControlGui extends javax.swing.JFrame {
         //</editor-fold>
         try {
             UIManager.setLookAndFeel(
-                    UIManager.getCrossPlatformLookAndFeelClassName());
+                    UIManager.getSystemLookAndFeelClassName());
         } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             JOptionPane.showMessageDialog(null, e, "Look and feel error", 0);
         }

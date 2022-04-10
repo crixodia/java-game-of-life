@@ -65,6 +65,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnClose">
       <Properties>
+        <Property name="actionCommand" type="java.lang.String" value=""/>
         <Property name="label" type="java.lang.String" value="Ok!"/>
       </Properties>
       <Events>

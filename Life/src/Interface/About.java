@@ -68,6 +68,7 @@ public class About extends JFrame {
             }
         });
 
+        btnClose.setActionCommand("");
         btnClose.setLabel("Ok!");
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -465,7 +465,7 @@ public class ControlGui extends javax.swing.JFrame {
         this.output = outputFolder;
 
         if (inputFile.exists()) {
-            final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+            final MessageDigest digest = MessageDigest.getInstance("SHA-256");
             final byte[] bytes = digest.digest(Files.readAllBytes(inputFile.toPath()));
 
             String hash = bytesToHex(bytes);

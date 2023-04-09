@@ -1,66 +1,66 @@
 # Java Game Of Life
 
-El juego de la vida es un autómata celular diseñado por el matemático británico John Horton Conway en 1970. Se trata de un juego de cero jugadores, lo que quiere decir que su evolución está determinada por el estado inicial y no necesita ninguna entrada de datos posterior.
+The Game of Life is a cellular automaton designed by the British mathematician John Horton Conway in 1970. It is a zero-player game, which means that its evolution is determined by the initial state and does not require any further input of data.
 
-## Contenido
+## Contents
 
 - [Java Game Of Life](#java-game-of-life)
-  - [Contenido](#contenido)
-  - [Reglas](#reglas)
+  - [Contents](#contents)
+  - [Rules](#rules)
   - [GUI](#gui)
-    - [Controles](#controles)
-      - [Guardando y cargando patrones](#guardando-y-cargando-patrones)
-    - [Rejilla](#rejilla)
-    - [Generando animaciones](#generando-animaciones)
-  - [Ejemplos](#ejemplos)
+    - [Controls](#controls)
+    - [Saving and Loading patterns](#saving-and-loading-patterns)
+    - [Grid](#grid)
+    - [Animations](#animations)
+  - [Examples](#examples)
 
-## Reglas
+## Rules
 
-El "tablero de juego" es una malla plana y toroidal formada por cuadrados (las "células") que se extiende por el infinito en todas las direcciones. Por tanto, cada célula tiene 8 "vecinas", que son las que están próximas a ella, incluidas las diagonales. Las células tienen dos estados: están "vivas" o "muertas" (o "encendidas" y "apagadas"). El estado de las células evoluciona a lo largo de unidades de tiempo discretas (se podría decir que por turnos). El estado de todas las células se tiene en cuenta para calcular el estado de las mismas al turno siguiente. Todas las células se actualizan simultáneamente en cada turno, siguiendo estas reglas:
+The "game board" is a flat, toroidal grid made up of squares (the "cells") that extends infinitely in all directions. Therefore, each cell has 8 "neighbors", which are the ones that are closest to it, including diagonals. The cells have two states: they are either "alive" or "dead" (or "on" and "off"). The state of the cells evolves over discrete units of time (you could say by turns). The state of all cells is taken into account to calculate their state in the next turn. All cells are updated simultaneously in each turn, following these rules:
 
-1. **Una célula muerta con exactamente 3 células vecinas vivas "nace" (es decir, al turno siguiente estará viva).**
-2. **Una célula viva con 2 o 3 células vecinas vivas sigue viva, en otro caso muere (por "soledad" o "superpoblación").**
+1. A dead cell with exactly 3 live neighboring cells "comes to life" (i.e., in the next turn it will be alive).
+2. A live cell with 2 or 3 live neighboring cells remains alive, otherwise it dies (due to "loneliness" or "overcrowding").
 
-Extraído de [Wikipedia](https://es.wikipedia.org/wiki/Juego_de_la_vida)
+Extracted from [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
 ## GUI
 
-### Controles
+### Controls
 
-La ventana de controles permitirá arrancar el cómputo de estados del juego. Con el botón Play (podrás parar el juego con Stop). Además, observaremos la población de cada estado y su respectiva generación.
+The control window will allow you to start the computation of the game's states. Use the Play button to start the game (you can stop it with the Stop button). Additionally, we will observe the population of each state and its respective generation.
 
 ![control_gui](/images/contro-gui.png)
 
-#### Guardando y cargando patrones
+### Saving and Loading patterns
 
-Una parte a resaltar de la GUI es que podremos guardar y cargar patrones. Para guardar patrones simplemente dibujaremos uno previamente en la rejilla haciendo clic en los lugares deseados. Y luego, en la ventana de controles el botón "Save" creará un archivo formato **jglf** con una lista de coordenadas en las que las células están vivas.
+An important feature of the GUI is that we can save and load patterns. To save a pattern, simply draw one beforehand on the grid by clicking on the desired locations. Then, in the control window, the "Save" button will create a **jglf** format file with a list of coordinates where the cells are alive.
 
-![Guardar archivo](/images/save-dialog.png)
+![Save file](/images/save-dialog.png)
 
-Una vez tengamos nuestros propios patrones, podremos cargarlos con el botón "Open". Luego, automáticamente limpiará la rejilla y cargará toda la población.
+Once we have our own patterns, we can load them using the "Open" button. Then, it will automatically clear the grid and load the entire cells.
 
-![Abrir archivo](/images/open-dialog.png)
+![Open file](/images/open-dialog.png)
 
-### Rejilla
+### Grid
 
-En la rejilla visualizaremos el cambio de estados y (cuando el juego esté en pausa) podremos dibujar patrones personalizados. El juego está programado de forma toroidal (Similar a la superficie de un planeta representada en un plano). Por tanto **la rejilla NO es infinita**.
+On the grid, we will visualize the change of states and (when the game is paused) we can draw custom patterns. The game is programmed toroidally (similar to the surface of a planet represented on a plane). Therefore, the grid is **NOT** infinite.
 
-![Rejilla](/images/grid-gui.png)
+![Grid](/images/grid-gui.png)
 
-### Generando animaciones
+### Animations
 
-Puedes generar animaciones a través del botón especificado en la GUI. Luego deberás proporcionar una ruta de salida para las imágenes generadas y los colores a utilizar. Además, es posible tomar cualquier archivo y convertirlo a un patrón de inicio para el juego basado en los bytes del archivo. Esto con la finalidad de generar diversos patrones sin "dibujarlos" en la rejilla. Algo de utilidad para pruebas rápidas.
+You can generate animations through the button specified in the GUI. Then, you will need to provide an output path for the generated images and the colors to use. Additionally, it is possible to take any file and convert it to a starting pattern for the game based on the bytes of the file. This is useful for generating various patterns without "drawing" them on the grid, especially for quick testing purposes.
 
 ![gif_dialog](/images/GIF_dialog.png)
 
-## Ejemplos
+## Examples
 
-Puedes descargar algunos patrones como [ejemplos](https://github.com/crixodia/java-game-of-life/blob/master/examples/). Uno de los más intrigantes son los osciladores ([osc.jglf](https://github.com/crixodia/java-game-of-life/blob/master/examples/osc.jglf)).
+You can download some patterns as [examples](https://github.com/crixodia/java-game-of-life/blob/master/examples/). One of the most intriguing ones are the oscillators ([osc.jglf](https://github.com/crixodia/java-game-of-life/blob/master/examples/osc.jglf)).
 
 ![Grid Gif](/images/grid-gif.gif)
 
-Al generar una animación gif obtendrás algo similar a la siguiente imagen. Podrás definir la posibilidad de un gif en ciclo infinito.
+When generating a gif animation, you will get something similar to the following image. You can define the possibility of an infinite loop for the gif.
 
 ![Life Gif](/examples/GIFgen/Profile_Life_NFT/animation.gif)
 
-🧐 Para sugerencias o preguntas puedes contactar a [@crixodia](https://www.twitter.com/crixodia)
+🧐 For suggestions or questions, you can contact [@crixodia](https://www.twitter.com/crixodia)
